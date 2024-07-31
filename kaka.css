@@ -1,0 +1,95 @@
+/* Custom styles for the about.html page */
+
+/* About Section Styles */
+.about {
+  padding: 80px 0;
+}
+
+.about h3 {
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.about p {
+  font-size: 18px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.about ul {
+  padding-left: 20px;
+  list-style: none;
+}
+
+.about ul li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 10px;
+}
+
+.about ul li i {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  color: #007bff; /* Changed red to blue */
+}
+
+/* Facts Section Styles */
+.facts {
+  background-color: #f9f9f9;
+  padding: 60px 0;
+}
+
+.facts .counters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.facts .counters div {
+  text-align: center;
+  margin: 0 20px;
+}
+
+.facts .counters p {
+  font-size: 20px;
+  color: #333;
+  margin-top: 10px;
+}
+
+.facts .counters span {
+  font-size: 36px;
+  color: #007bff; /* Changed red to blue */
+  display: block;
+}
+
+/* Breadcrumbs Section Styles */
+.breadcrumbs {
+  background-color: #f9f9f9;
+  padding: 20px 0;
+}
+
+.breadcrumbs h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+}
+
+.breadcrumbs ol li {
+  font-size: 16px;
+  color: #666;
+  margin-right: 10px;
+}
+
+.breadcrumbs ol li:last-child {
+  color: #333;
+}

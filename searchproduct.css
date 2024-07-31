@@ -1,0 +1,82 @@
+/* searchproduct.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    color: white;
+    background-image: url('Becky.jpg'); /* Background image */
+    background-size: cover;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.5); /* White smoke with opacity */
+    border-radius: 10px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjusted to space between */
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 50px;
+    height: auto;
+}
+
+.search-bar input[type="text"] {
+    width: 400px; /* Adjusted width */
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    color: black; /* Adjusted text color */
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #009688; /* White/azure */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.search-bar button:hover {
+    background-color: #00796b; /* Grey */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333; /* Adjusted text color */
+}
+
+.product-grid {
+    text-align: center; /* Center the products */
+}
+
+.product-item {
+    display: inline-block; /* Display as inline-block */
+    width: calc(25% - 10px); /* Adjusted width for 4 items per row */
+    margin-bottom: 20px; /* Add some space between rows */
+    border: 1px solid black; /* Black */
+    border-radius: 5px;
+    overflow: hidden;
+    height: 200px; /* Set a fixed height */
+}
+
+.product-item img {
+    width: 100%;
+    height: 100%; /* Ensure image fills container */
+    object-fit: cover; /* Cover entire container */
+    transition: transform 0.3s ease;
+}
+
+.product-item img:hover {
+    transform: scale(1.1);
+}

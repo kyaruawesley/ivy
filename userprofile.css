@@ -1,0 +1,303 @@
+/* Reset default styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Prevent scrolling of the background */
+}
+
+/*background for the page*/
+.profile-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('phase2.jpg');
+    background-size: cover;
+    filter: blur(10px); /* Add blur effect */
+    z-index: -1; /* Behind the content */
+}
+
+/* Page layout and colors */
+.profile {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light gray background */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.back-icon {
+    font-size: 24px;
+    text-decoration: none;
+    color: #000000; /* Black icon color */
+    margin-bottom: 20px;
+}
+
+/* Profile header */
+.profile h1 {
+    text-align: center;
+    color: #000000; /* Black header text color */
+}
+
+/* Profile picture and details */
+.profile-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items at the start */
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    position: relative;
+    flex: 0 0 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#edit-profile-picture {
+    padding: 5px 10px;
+    background-color: #ff0000; /* Red button color */
+    color: #ffffff; /* White button text color */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth hover effect */
+    margin-top: 10px; /* Add margin to separate from profile picture */
+}
+
+#edit-profile-picture:hover {
+    background-color: #e60000; /* Darker red on hover */
+}
+
+.profile-details {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.profile-details label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333333; /* Darker text color */
+}
+
+.profile-details input,
+.profile-details textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc; /* Light gray border */
+    border-radius: 3px;
+}
+
+/* Past purchases */
+.purchases {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.purchase-item {
+    margin: 10px;
+     text-align: center; 
+}
+
+.purchase-item img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 5px;
+}
+
+.purchase-item p {
+    margin-top: 5px; /* Add space between image and price */
+    font-weight: bold;
+}
+
+ label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left; /* Align label text to the left */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px; /* Set a fixed height for textarea */
+        }
+
+        /* Button Styles (Optional) */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+.add-product-link {
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+    background-color: #007bff; /* Blue button color */
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.add-product-link:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+session_start(); // Start the session
+
+// Check if user is not logged in
+if (!isset($_SESSION['userid'])) {
+    header('Location: login.php'); // Redirect to login page if not logged in
+    exit;
+}
+
+// Connect to the database
+include 'connect.php'; // Assuming you have a separate file for database connection
+
+// Fetch user details from the database based on the session user ID
+$user_id = $_SESSION['userid'];
+
+try {
+    $stmt = $conn->prepare("SELECT * FROM listings WHERE sellers_first_name = ?");
+    $stmt->bind_param('s', $user_id); // Bind parameters
+    $stmt->execute();
+    $result = $stmt->get_result(); // Get result
+    $listings = $result->fetch_all(MYSQLI_ASSOC); // Fetch all rows
+} catch (mysqli_sql_exception $e) { // Catch mysqli exceptions
+    echo "Error fetching listings: " . $e->getMessage();
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="userprofile.css">
+    <style>
+        /* Add your CSS styles for the listings here */
+        .listing-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .listing-item {
+            width: 300px;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .listing-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .listing-item-content {
+            padding: 15px;
+        }
+
+        .listing-item h2 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: #333333;
+        }
+
+        .listing-item p {
+            margin-top: 5px;
+            margin-bottom: 10px;
+            color: #666666;
+        }
+    </style>
+</head>
+<body style="background-image: url('phase1.jpg'); background-size: cover; background-repeat:no-repeat;">
+<div class="profile-container">
+    <div class="profile">
+        <a href="index.html" class="back-icon"><i class="fas fa-home"></i></a>
+        <?php if ($_SESSION['user_role'] == 'seller') { ?>
+            <a href="listproduct.php" class="add-product-link">List a Product</a>
+        <?php } ?>
+        <h1>Welcome <?php echo $_SESSION['email']; ?></h1>
+        <h1>User Profile</h1>
+        <div class="profile-info">
+            <div class="profile-picture">
+                <img id="profile-image" src="path_to_default_profile_picture.jpg" alt="User Profile Picture">
+                <input type="file" id="profile-picture-input">
+            </div>
+            <button id="edit-profile-picture">Edit</button>
+            <div class="profile-details">
+                <label for="name">Name:</label>
+                <input type="text" id="name" value="<?php echo $_SESSION['first_name']; ?>">
+                <label for="email">Email:</label>
+                <input type="email" id="email" value="<?php echo $_SESSION['email']; ?>">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="listing-container">
+    <?php if (count($listings) > 0) : ?>
+        <?php foreach ($listings as $listing) : ?>
+            <div class="listing-item">
+                <?php if (!empty($listing['image'])) : ?>
+                    <img src="data:image/jpeg;base64,<?php echo htmlspecialchars(base64_encode($listing['image'])); ?>"
+                         alt="<?php echo htmlspecialchars($listing['product_name']); ?>" />
+                <?php else : ?>
+                    <img src="https://via.placeholder.com/300" alt="No Image Available" />
+                <?php endif; ?>
+                <div class="listing-item-content">
+                    <h2><?php echo htmlspecialchars($listing['product_name']); ?></h2>
+                    <!-- Add more listing details here if needed -->
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else : ?>
+        <p>No listings found.</p>
+    <?php endif; ?>
+</div>
+<script src="userprofile.js"></script>
+</body>
+</html>
+
